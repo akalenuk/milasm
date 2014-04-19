@@ -24,6 +24,13 @@ Of course you can multiline macroses like this:
 	    call void [mscorlib]System.Console::Write (string) 
     ]]
 
+Or even like this:
+
+    [[write: $text -> 
+        ldstr $text 
+        ((write string))
+    ]]
+
 And then replace some repeating code pattern with a single line:
 
     ((write: "Hello!"))
