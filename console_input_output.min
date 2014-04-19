@@ -1,14 +1,10 @@
-
 [[write $type -> call void [mscorlib]System.Console::Write ($type) ]]
 [[write line $type -> call void [mscorlib]System.Console::WriteLine ($type) ]]
 [[write: $text -> 
-	ldstr $text 
-	call void [mscorlib]System.Console::Write (string) 
+        ldstr $text 
+        ((write string))
 ]]
 
 [[read line -> call string [mscorlib]System.Console::ReadLine () ]]
 
 [[parse it as int32 -> call int32 [mscorlib]System.Int32::Parse(string) ]]
-
-    
-    
