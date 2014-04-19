@@ -1,0 +1,5 @@
+[[if so $do -> 
+	brfalse.s not_so_$#
+	$do
+	not_so_$#:
+]]
