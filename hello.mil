@@ -25,34 +25,36 @@
 
 .method static void main() cil managed
 {
-	.maxstack 2
-	.entrypoint
+        .maxstack 2
+        .entrypoint
     
-	.locals init (int32 a, int32 b)
+        .locals init (int32 a, int32 b)
 
-	((write: "Input positive x: "))
-	((read line))
-	((parse it as int32))
-	dup
-	stloc a
-	ldc.i4.s 0
-	cgt
-	((if so ((write: "Yes!\n")) ))
+        ((write: "Input positive x: "))
+        ((read line))
+        ((parse it as int32))
+        dup
+        stloc a
+        ldc.i4.s 0
+        cgt
+        ((if so 
+                ((write: "Yes!\n")) 
+        ))
 
-	ldc.i4.s 2
-	stloc b
-		
-	ldstr "x * 2 = "
-	((write string))
+        ldc.i4.s 2
+        stloc b
+                
+        ldstr "x * 2 = "
+        ((write string))
     
-	ldloc a
-	ldloc b
-	call int32 MulInt32 (int32, int32)
-	((write int32))
+        ldloc a
+        ldloc b
+        call int32 MulInt32 (int32, int32)
+        ((write int32))
         
-	ldstr ""
-	((write line string))
-	((read line))		
+        ldstr ""
+        ((write line string))
+        ((read line))           
 
-	ret
+        ret
 }
