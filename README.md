@@ -37,3 +37,14 @@ Another feature is macro definition files inclusion. You can write your macros d
     <<console_input_output.mil>>
  
 I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with macros definitions only ignoring all the other text. I recomend to keep extension for these files `min` to avoid confusion mixing them with usual `il` or macrosed `mil` files.
+
+That's it so far. I've been working on debugging the prototype mostly, so I didn't provide enough macroses yet, but as you can see from the example, it might become very verbose and readable macrolanguage as I go on. Look on this piece of example for instance:
+
+	((write: "Input positive x: "))
+	((read line))
+	((parse it as int32))
+	dup
+	stloc a
+	ldc.i4.s 0
+	cgt
+	((if so ((write: "Yes!\n")) ))
