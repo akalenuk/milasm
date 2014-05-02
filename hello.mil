@@ -2,6 +2,7 @@
 
 <<console_input_output.min>>
 <<branching.min>>
+<<instructions.min>>
 
 .assembly extern mscorlib {}
 
@@ -9,19 +10,8 @@
 {
     .ver 1:0:1:0
 }
+
 .module hello.exe
-
-
-.method public static int32 MulInt32 (int32 a, int32 b) cil managed
-{
-    .maxstack 2    
-    
-    ldarg a
-    ldarg b
-    mul
-    
-    ret
-}
 
 .method static void main() cil managed
 {
@@ -33,28 +23,25 @@
         ((write: "Input positive x: "))
         ((read line))
         ((parse it as int32))
-        dup
-        stloc a
-        ldc.i4.s 0
-        cgt
-        ((if so 
-                ((write: "Yes!\n")) 
-        ))
-
-        ldc.i4.s 2
-        stloc b
-                
-        ldstr "x * 2 = "
-        ((write string))
+	((store it as local a))
+	((check if ((local a)) > ((int32 0)) ))
+        ((if so {{
+			((write: "It is positive!\n")) 
+			((load int32 2))
+			((store it as local b))
+			 
+			((write: "x * 2 = "))
     
-        ldloc a
-        ldloc b
-        call int32 MulInt32 (int32, int32)
-        ((write int32))
-        
-        ldstr ""
-        ((write line string))
-        ((read line))           
+			((load local a))
+			((load local b))
+			((multiply them))
 
-        ret
+			((write int32))      
+			((write line: ""))	
+		}}else{{
+			((write: "It isn't positive.\n"))
+		}} 
+	))
+        ((read line))           
+        ((return))
 }

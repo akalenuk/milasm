@@ -76,11 +76,15 @@ def sanitize_tree( tree ):
 def eval_macros( tree_or_leaf, macroses ):
         global MID
         mid = MID.next()
-
+        
         if not isinstance(tree_or_leaf, list):
                 leaf = tree_or_leaf
                 return leaf
         tree = sanitize_tree( tree_or_leaf )
+
+	if tree[0] == 'quote':
+	        return ' '.join([eval_macros( subtree, macroses ) for subtree in tree[1:]])
+
         for macros in macroses:
                 (macro_def, macro_meaning) = macros
                 if len(macro_def) != len(tree):
@@ -98,7 +102,8 @@ def eval_macros( tree_or_leaf, macroses ):
                         for (m, t) in symbols:
                                 ret = ret.replace(m, eval_macros(t, macroses))
                         return ret
-        return ' '.join([eval_macros( subtree, macroses ) for subtree in tree_or_leaf])
+	raise Exception("Macros ((" + str(tree) + ")) unresolved!")
+#        return ' '.join([eval_macros( subtree, macroses ) for subtree in tree_or_leaf])
                         
                 
 def eval_macroses( tree, macroses ):
@@ -113,6 +118,8 @@ def eval_macroses( tree, macroses ):
         
 def prepare_input( text ):
         text = text.replace('\t', ' ')
+        text = text.replace('{{', '((quote ')
+        text = text.replace('}}', '))')
         while text.find('  ') != -1:
                 text = text.replace('  ', ' ')
 

@@ -3,3 +3,12 @@
 	$do
 	not_so_$#:
 ]]
+
+[[if so $do1 else $do2-> 
+	brfalse.s not_so_$#
+		$do1
+	br.s done_$#
+	not_so_$#:
+		$do2
+	done_$#:
+]]

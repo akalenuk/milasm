@@ -1,0 +1,15 @@
+[[local $x -> ldloc $x]]
+[[argument $x -> ldarg $x]]
+[[int32 $x -> ldc.i4.s $x]]
+[[string $x -> ldstr $x]]
+[[store it as local $x -> stloc $x]]
+[[load $type $x -> (($type $x))]]
+
+[[check if $a > $b -> 
+	$a
+	$b
+	cgt
+]]
+
+[[multiply them -> mul]]
+[[return -> ret]]
