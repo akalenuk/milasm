@@ -100,3 +100,5 @@ Another feature is macro definition files inclusion. You can write your macros d
 I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with macros definitions only ignoring all the other text: code or comments. I recomend to keep extension for these files `min` to avoid confusion mixing them with usual `il` or macrosed `mil` files.
 
 That's it so far. I've been working on debugging the prototype mostly, so I didn't provide enough macroses yet, but as you can see from the example, it might become very verbose and readable macrolanguage as I go on. 
+
+I have a little more on a subject here on CordSpace: http://codrspace.com/akalenuk/macroassembler-of-my-dreams/
