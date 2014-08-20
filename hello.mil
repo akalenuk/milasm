@@ -17,31 +17,28 @@
 {
         .maxstack 2
         .entrypoint
-    
-        .locals init (int32 a, int32 b)
+
+        .locals init (int32 x)
 
         ((write: "Input positive x: "))
         ((read line))
         ((parse it as int32))
-	((store it as local a))
-	((check if ((local a)) > ((int32 0)) ))
+        ((store it as local x))
+        ((check if ((local x)) > ((int32 0)) ))
         ((if so {{
-			((write: "It is positive!\n")) 
-			((load int32 2))
-			((store it as local b))
-			 
-			((write: "x * 2 = "))
-    
-			((load local a))
-			((load local b))
-			((multiply them))
+            ((write line: "It is positive!"))
+            ((write: "x * 2 = "))
 
-			((write int32))      
-			((write line: ""))	
-		}}else{{
-			((write: "It isn't positive.\n"))
-		}} 
-	))
-        ((read line))           
+            ((load local x))
+            ((load int32 2))
+            ((multiply them))
+
+            ((write int32))
+            ((write: "\n"))
+        }}else{{
+            ((write line: "It isn't positive."))
+        }}
+        ))
+        ((read line))
         ((return))
 }

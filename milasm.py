@@ -26,7 +26,7 @@ def datum_to_list( text ):
                 else:
                         ret += ['\"' + el + '\"']
         return ret
-        
+
 
 def entree( ls, cur_level = 0 ):
         tree = []
@@ -41,7 +41,7 @@ def entree( ls, cur_level = 0 ):
                                 temp_ls += [(level, datum_element)]
         return tree
 
-        
+
 def read_macroses( text ):
         macroses = []
         imports = [macros.split('<<')[1] for macros in  text.split('>>')[:-1]]
@@ -82,8 +82,8 @@ def eval_macros( tree_or_leaf, macroses ):
                 return leaf
         tree = sanitize_tree( tree_or_leaf )
 
-	if tree[0] == 'quote':
-	        return ' '.join([eval_macros( subtree, macroses ) for subtree in tree[1:]])
+        if tree[0] == 'quote':
+            return ' '.join([eval_macros( subtree, macroses ) for subtree in tree[1:]])
 
         for macros in macroses:
                 (macro_def, macro_meaning) = macros
@@ -102,7 +102,7 @@ def eval_macros( tree_or_leaf, macroses ):
                         for (m, t) in symbols:
                                 ret = ret.replace(m, eval_macros(t, macroses))
                         return ret
-	raise Exception("Macros ((" + str(tree) + ")) unresolved!")
+        raise Exception("Macros ((" + str(tree) + ")) unresolved!")
 #        return ' '.join([eval_macros( subtree, macroses ) for subtree in tree_or_leaf])
                         
                 
@@ -115,7 +115,7 @@ def eval_macroses( tree, macroses ):
                         evaled += [ elem ]
         return evaled
 
-        
+
 def prepare_input( text ):
         text = text.replace('\t', ' ')
         text = text.replace('{{', '((quote ')
@@ -131,27 +131,25 @@ def prepare_input( text ):
                         numbered_lines += [line]
                 else:
                         numbered_lines += ['.line ' + str(i) + ' ' + line ]
-        
         return ' \n '.join( numbered_lines )
 
 
 def sanitize_definitions( text ):
         pairs = text.split('[[')
         return pairs[0] + ''.join([pair.split(']]')[1] for pair in pairs[1:]])
-        
+
 def sanitize_imports( text ):
         pairs = text.split('<<')
         return pairs[0] + ''.join([pair.split('>>')[1] for pair in pairs[1:]])
 
 def sanitize( text ):
         return sanitize_definitions( sanitize_imports( text ) )
-        
+
 if len(sys.argv) == 1:
         print "File name, please."
         exit(1)
 
-        
-f = open(sys.argv[1])   
+f = open(sys.argv[1])
 text = ''.join(f.readlines())
 text = prepare_input( text )
 f.close()
