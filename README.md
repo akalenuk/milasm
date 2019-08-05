@@ -1,7 +1,7 @@
 milasm
 ======
 
-Macros system for CLR IL assembly. This is just an early prototype still in progress, but it can do certain things or at least show the way I see them done.
+Macros system for CLR IL assembly. This is just a POC but it works.
 
 Let's start with an example:
 
@@ -53,9 +53,9 @@ Let's start with an example:
             ((return))
     }
 
-This is a valid ILAsm code with milasm macroses.
+This is a valid ILAsm code with milasm macroses. It runs and it doubles the input if its a positive number.
 
-Macroses are defined in an arbitrary syntax using double square brackets, like this:
+Macros are defined in arbitrary syntax using double square brackets, like this:
 
     [[write $type -> call void [mscorlib]System.Console::Write ($type) ]]
 
@@ -87,18 +87,16 @@ And then replace some repeating code pattern with a single line:
 
     ((write: "Hello!"))
     
-When you want to use macros with the block of macroses or ILAsm code as a macros variable, use double curly brackets: `{{ }}`.
+When you want to write a macro with the block of macros or ILAsm code as a macros variable, use double curly brackets: `{{ }}`.
 
-Note, that syntax of these macroses is completely arbitrary. Macroexpansion uses primitive prolog style pattern-matching with atoms being always separated by space, so you can use almost any symbols in a macro definition. Just remember that all identifiers starting with `$` are suppose to be macro variables. 
+Note that apart from the parenthesis, the syntax of these macroses is non restricted. Macroexpansion uses primitive prolog style pattern-matching with atoms being always separated by space, so you can use almost any symbols in your macro definition. Just remember that all identifiers starting with `$` are supposed to be macro variables. 
 
-And there is one special macro variable: `$#`. It is a macro expansion instance ID. it is intended for branching, so you can make labels like `HERE_$#:` expanding like `HERE_$5:` or `HERE_$16:` or `HERE_$192:` new every time the macro expansion is happening.
+And there is one special macro variable: `$#`. It is a macro expansion instance ID. it is intended for branching, so you can make labels like `HERE_$#:` expanding like `HERE_$5:` or `HERE_$16:` or `HERE_$192:` anew every time the macro expansion is happening.
 
-Another feature is macro definition files inclusion. You can write your macros definition in the same file the code is, or you can include them with double corner braces like this:
+Another feature is files inclusion dedicated for macros. You can write your macros' definitions in the same file the code is, or you can store them elsewhere and then include them with double corner braces like this:
 
-    <<console_input_output.mil>>
+    <<console_input_output.min>>
  
-I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with macros definitions only ignoring all the other text: code or comments. I recomend to keep extension for these files `min` to avoid confusion mixing them with usual `il` or macrosed `mil` files.
+I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with macros definitions only ignoring all the other text: code or comments. I recomend keeping extension for these files `min` (for macros include) to avoid confusion mixing them with the code files.
 
-That's it so far. I've been working on debugging the prototype mostly, so I didn't provide enough macroses yet, but as you can see from the example, it might become very verbose and readable macrolanguage as I go on. 
-
-I have a little more on a subject here on CordSpace: http://codrspace.com/akalenuk/macroassembler-of-my-dreams/
+That's it so far. Enjoy!
