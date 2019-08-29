@@ -1,7 +1,7 @@
 milasm
 ======
 
-Macros system for CLR IL assembly. This is just a POC but it works.
+Macros for CLR IL assembly. This is just a proof of concept but it works, you can try to build the code, write your own macros, write your own CLR applications.
 
 Let's start with an example:
 
@@ -53,13 +53,15 @@ Let's start with an example:
             ((return))
     }
 
-This is a valid ILAsm code with milasm macroses. It runs and it doubles the input if its a positive number.
+This is a valid ILAsm code with milasm macroses. Not a mock-up, but a buildable thing. 
 
-Macros are defined in arbitrary syntax using double square brackets, like this:
+It reads a number from the console, checks if it's positive, and if it is, returns the double of this number. What's important, you can read this yourself from the code even if you don't know the least of CLR assembly. This is meant to be low-level but readable.
+
+Macros are defined in free-form syntax using double square brackets, like this:
 
     [[write $type -> call void [mscorlib]System.Console::Write ($type) ]]
 
-It takes the pattern on the left side of an arrow and then replaces it being called with double round brackets it a code so:
+The macro expansion works like this: the part before the `->` is a pattern, the part after the arrow is the substitution. `$type` is a macro argument. All the words starting from `$` are macro arguments. When a pattern occurs in the code, it's being replaced recursively until no recursive patterns left.
 
     ldstr "Hello!"
     ((write string))
@@ -69,14 +71,14 @@ Becomes:
     ldstr "Hello!"
     call void [mscorlib]System.Console::Write (string)
     
-Of course you can multiline macroses like this:
+Of course, you can multiline macros like this:
 
     [[write: $text -> 
 	    ldstr $text 
 	    call void [mscorlib]System.Console::Write (string) 
     ]]
 
-Or even like this:
+And you can make recursive macros:
 
     [[write: $text -> 
         ldstr $text 
@@ -87,16 +89,18 @@ And then replace some repeating code pattern with a single line:
 
     ((write: "Hello!"))
     
-When you want to write a macro with the block of macros or ILAsm code as a macros variable, use double curly brackets: `{{ }}`.
+When you want to write a macro with the block of other macros or some ILAsm code as a macros variable, use double curly brackets: `{{ }}`. Kind of a cheap take on first-order macros if you wish.
 
 Note that apart from the parenthesis, the syntax of these macroses is non restricted. Macroexpansion uses primitive prolog style pattern-matching with atoms being always separated by space, so you can use almost any symbols in your macro definition. Just remember that all identifiers starting with `$` are supposed to be macro variables. 
 
 And there is one special macro variable: `$#`. It is a macro expansion instance ID. it is intended for branching, so you can make labels like `HERE_$#:` expanding like `HERE_$5:` or `HERE_$16:` or `HERE_$192:` anew every time the macro expansion is happening.
 
-Another feature is files inclusion dedicated for macros. You can write your macros' definitions in the same file the code is, or you can store them elsewhere and then include them with double corner braces like this:
+Another feature is files inclusion dedicated for macros only. You can write your macros definitions in the same file your code is, but you can store them elsewhere and then include them with double corner braces like this:
 
     <<console_input_output.min>>
  
-I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with macros definitions only ignoring all the other text: code or comments. I recomend keeping extension for these files `min` (for macros include) to avoid confusion mixing them with the code files.
+I didn't want to mess with all CLR infrastructure, so this is not the usual C-style inline. it deliberately works with *macros definitions only* ignoring all the other text: code or comments. I'd recomend keeping extension for these files `min` (for macros include) to avoid confusion mixing them with the code files but this is not an inherent restriction.
 
-That's it so far. Enjoy!
+**TL&DR**
+
+This is a readable Assembly made of prolog-like pattern matching macros.
