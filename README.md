@@ -7,11 +7,11 @@ This is a readable Assembly dialect made of prolog-like pattern matching macros 
 
 Write this:
 
-    ((write: "Hello!"))
+    ((write: "Hello, world!"))
 
 Instead of that:
 
-    ldstr "Hello!"
+    ldstr "Hello, world!"
     call void [mscorlib]System.Console::Write (string)
 
 The macrosystem is just a proof of concept, but it works: you can build the code, write your own macros, write your own CLR applications.
