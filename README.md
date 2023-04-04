@@ -3,9 +3,18 @@ MILAsm
 
 ## TL&DR
 
-This is a readable Assembly made of prolog-like pattern matching macros for CLR IL assembly. 
+This is a readable Assembly made of prolog-like pattern matching macros for CLR IL assembly.
 
-It is just a proof of concept, but it works: you can build the code, write your own macros, write your own CLR applications.
+Write this:
+
+    ((write: "Hello!"))
+
+Instead of this:
+
+    ldstr "Hello!"
+    call void [mscorlib]System.Console::Write (string)
+
+This is just a proof of concept, but it works: you can build the code, write your own macros, write your own CLR applications.
 
 ## An example: hello.il
 
@@ -89,7 +98,7 @@ And you can make recursive macros:
         ((write string))
     ]]
 
-And with this new macro, you already can turn this:
+And with this new macro, you can turn this:
 
     ldstr "Hello!"
     call void [mscorlib]System.Console::Write (string)
