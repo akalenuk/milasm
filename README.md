@@ -9,7 +9,7 @@ Write this:
 
     ((write: "Hello!"))
 
-Instead of this:
+Instead of that:
 
     ldstr "Hello!"
     call void [mscorlib]System.Console::Write (string)
