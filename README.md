@@ -3,7 +3,7 @@ MILAsm
 
 ## TL&DR
 
-This is a readable Assembly made of prolog-like pattern matching macros for CLR IL assembly.
+This is a readable Assembly dialect made of prolog-like pattern matching macros for CLR ILAsm.
 
 Write this:
 
@@ -14,7 +14,7 @@ Instead of this:
     ldstr "Hello!"
     call void [mscorlib]System.Console::Write (string)
 
-This is just a proof of concept, but it works: you can build the code, write your own macros, write your own CLR applications.
+The macrosystem is just a proof of concept, but it works: you can build the code, write your own macros, write your own CLR applications.
 
 ## An example: hello.il
 
